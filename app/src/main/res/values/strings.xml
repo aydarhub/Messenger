@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Messenger Beta</string>
+    <string name="tab_item_0">Что-то-1</string>
+    <string name="tab_item_1">Что-то-2</string>
+    <string name="tab_item_2">Что-то-3</string>
+    <string name="tab_item_messenger">Messenger</string>
 </resources>
