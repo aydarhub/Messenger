@@ -6,24 +6,18 @@
     <string name="tab_item_messenger">Messenger</string>
     <string name="search_title">Search</string>
 
-    <string-array name="favourite_contacts">
+    <string-array name="contacts">
         <item>Abdulla</item>
         <item>Mingayaz</item>
         <item>Nuriman</item>
         <item>Shakir</item>
-    </string-array>
-    <string-array name="a_contacts">
         <item>Abdulla</item>
         <item>Aydar</item>
         <item>Aynaz</item>
         <item>Ayzat</item>
-    </string-array>
-    <string-array name="b_contacts">
         <item>Bagamol</item>
         <item>Boris</item>
         <item>Bulat</item>
-    </string-array>
-    <string-array name="i_contacts">
         <item>Ilgiz</item>
         <item>Ildar</item>
         <item>Ildus</item>

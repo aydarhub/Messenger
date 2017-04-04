@@ -11,9 +11,6 @@ import android.view.ViewGroup;
 
 import com.aydar.messenger.R;
 import com.aydar.messenger.fragment.AbstractTabFragment;
-import com.aydar.messenger.fragment.messenger.left_column.contacts.ContactItem;
-import com.aydar.messenger.fragment.messenger.left_column.contacts.ContactsCardsItemRecyclerView;
-import com.aydar.messenger.fragment.messenger.left_column.contacts.ContactsRecyclerView;
 import com.aydar.messenger.fragment.messenger.left_column.ToolbarFragment;
 
 public class MessengerFragment extends AbstractTabFragment {
@@ -33,10 +30,8 @@ public class MessengerFragment extends AbstractTabFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Fragment toolbarFragment = new ToolbarFragment();
-        Fragment contactsFragment = new ContactsRecyclerView();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.add(R.id.left_column, toolbarFragment);
-        ft.add(R.id.left_column, contactsFragment);
         ft.commit();
         view = inflater.inflate(LAYOUT, container, false);
 
