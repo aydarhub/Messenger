@@ -3,5 +3,6 @@
     <color name="colorPrimary">#3f51b5</color>
     <color name="colorPrimaryDark">#324191</color>
     <color name="mainBackground">#f1f1f1</color>
-    <color name="colorWhite">#f1f1f1</color>
+    <color name="colorWhite">#fff</color>
+    <color name="colorContactIcon">#a9a9a9</color>
 </resources>

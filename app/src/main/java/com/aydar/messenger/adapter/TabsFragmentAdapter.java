@@ -5,10 +5,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.aydar.messenger.R;
 import com.aydar.messenger.fragment.AbstractTabFragment;
 import com.aydar.messenger.fragment.FirstFragment;
-import com.aydar.messenger.fragment.MessengerFragment;
+import com.aydar.messenger.fragment.messenger.MessengerFragment;
 import com.aydar.messenger.fragment.SecondFragment;
 import com.aydar.messenger.fragment.ThirdFragment;
 
