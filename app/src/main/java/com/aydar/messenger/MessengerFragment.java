@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -53,6 +55,7 @@ public class MessengerFragment extends AbstractTabFragment {
         private TextView mLetter;
         private ImageView mIcon;
         private TextView mName;
+        private LinearLayout mItemLayout;
 
         private ContactHolder(View itemView) {
             super(itemView);
@@ -60,6 +63,7 @@ public class MessengerFragment extends AbstractTabFragment {
             mLetter = (TextView) itemView.findViewById(R.id.contact_item_letter);
             mIcon = (ImageView) itemView.findViewById(R.id.contact_item_icon);
             mName = (TextView) itemView.findViewById(R.id.contact_item_name);
+            mItemLayout = (LinearLayout) itemView.findViewById(R.id.contact_item);
         }
     }
 
@@ -81,6 +85,16 @@ public class MessengerFragment extends AbstractTabFragment {
         @Override
         public void onBindViewHolder(ContactHolder holder, int position) {
             Contact contact = mContacts.get(position);
+            Log.i("Position", Integer.toString(position));
+            if (position == 0 || mContacts.get(position).getName().charAt(0) != mContacts.get(position - 1).getName().charAt(0)) {
+                holder.mLetter.setText(Character.toString(contact.getName().charAt(0)));
+            } else if (position != mContacts.size() - 1 && mContacts.get(position).getName().charAt(0) != mContacts.get(position + 1).getName().charAt(0)) {
+                holder.mItemLayout.setBackgroundResource(R.drawable.bg);
+            } else {
+                holder.mLetter.setText("");
+                holder.mItemLayout.setBackgroundColor(getResources().getColor(R.color.colorWhite));
+
+            }
             holder.mIcon.setImageBitmap(contact.getIcon());
             holder.mName.setText(contact.getName());
         }
