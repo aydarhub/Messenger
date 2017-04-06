@@ -1,25 +1,22 @@
-package com.aydar.messenger.fragment;
+package com.aydar.messenger;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.aydar.messenger.R;
-
-public class ThirdFragment extends AbstractTabFragment {
+public class SecondFragment extends AbstractTabFragment {
     private static final int LAYOUT = R.layout.fragment_example;
 
-    public static ThirdFragment getInstance(Context context) {
+    public static SecondFragment getInstance(Context context) {
         Bundle args = new Bundle();
-        ThirdFragment fragment = new ThirdFragment();
+        SecondFragment fragment = new SecondFragment();
         fragment.setArguments(args);
         fragment.setContext(context);
-        fragment.setTitle(context.getString(R.string.tab_item_2));
-        
+        fragment.setTitle(context.getString(R.string.tab_item_1));
+
         return fragment;
     }
 

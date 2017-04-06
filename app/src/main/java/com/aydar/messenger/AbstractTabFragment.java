@@ -1,10 +1,10 @@
-package com.aydar.messenger.fragment;
+package com.aydar.messenger;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
-public class AbstractTabFragment extends Fragment {
+public abstract class AbstractTabFragment extends Fragment {
 
     private String title;
     protected Context context;

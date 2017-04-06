@@ -3,28 +3,26 @@ package com.aydar.messenger;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-import android.widget.Toast;
+import android.util.Log;
 
 import com.aydar.messenger.adapter.TabsFragmentAdapter;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String LOG_TAG = "ACTION MainActivity";
 
     private Toolbar toolbar;
     ViewPager viewPager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        setTheme(R.style.AppDefault);
         super.onCreate(savedInstanceState);
+        setTheme(R.style.AppDefault);
         setContentView(R.layout.activity_main);
-
         initToolbar();
         initTabs();
 
@@ -44,4 +42,5 @@ public class MainActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         toolbar.setTitle(R.string.app_name);
     }
+
 }

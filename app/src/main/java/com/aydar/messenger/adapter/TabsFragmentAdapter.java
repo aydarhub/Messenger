@@ -4,19 +4,17 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.SparseArray;
 
-import com.aydar.messenger.fragment.AbstractTabFragment;
-import com.aydar.messenger.fragment.FirstFragment;
-import com.aydar.messenger.fragment.messenger.MessengerFragment;
-import com.aydar.messenger.fragment.SecondFragment;
-import com.aydar.messenger.fragment.ThirdFragment;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.aydar.messenger.AbstractTabFragment;
+import com.aydar.messenger.MessengerFragment;
+import com.aydar.messenger.FirstFragment;
+import com.aydar.messenger.SecondFragment;
+import com.aydar.messenger.ThirdFragment;
 
 public class TabsFragmentAdapter extends FragmentPagerAdapter {
 
-    private Map<Integer, AbstractTabFragment> tabs;
+    private SparseArray<AbstractTabFragment> tabs;
 
     public TabsFragmentAdapter(Context context, FragmentManager fm) {
         super(fm);
@@ -39,7 +37,7 @@ public class TabsFragmentAdapter extends FragmentPagerAdapter {
     }
 
     private void initTabsMap(Context context) {
-        tabs = new HashMap<>();
+        tabs = new SparseArray<>();
         tabs.put(0, FirstFragment.getInstance(context));
         tabs.put(1, SecondFragment.getInstance(context));
         tabs.put(2, ThirdFragment.getInstance(context));

@@ -5,6 +5,7 @@
     <string name="tab_item_2">Что-то-3</string>
     <string name="tab_item_messenger">Messenger</string>
     <string name="search_title">Search</string>
+    <string name="search">Search</string>
 
     <string-array name="contacts">
         <item>Abdulla</item>
