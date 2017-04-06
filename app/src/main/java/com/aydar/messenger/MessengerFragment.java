@@ -1,6 +1,7 @@
 package com.aydar.messenger;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -92,7 +93,11 @@ public class MessengerFragment extends AbstractTabFragment {
                 holder.mItemLayout.setBackgroundResource(R.drawable.bg);
             } else {
                 holder.mLetter.setText("");
-                holder.mItemLayout.setBackgroundColor(getResources().getColor(R.color.colorWhite));
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    holder.mItemLayout.setBackgroundColor(getResources().getColor(R.color.colorWhite, null));
+                } else {
+                    holder.mItemLayout.setBackgroundColor(getResources().getColor(R.color.colorWhite));
+                }
 
             }
             holder.mIcon.setImageBitmap(contact.getIcon());
