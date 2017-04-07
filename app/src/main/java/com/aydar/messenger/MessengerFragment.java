@@ -14,6 +14,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.aydar.messenger.leftcolumn.contacts.Contact;
+import com.aydar.messenger.leftcolumn.contacts.ContactLab;
+import com.aydar.messenger.leftcolumn.contacts.adapter.ContactAdapter;
+
 import java.util.List;
 
 public class MessengerFragment extends AbstractTabFragment {
@@ -46,69 +50,10 @@ public class MessengerFragment extends AbstractTabFragment {
     private void updateUI() {
         ContactLab contactLab = ContactLab.get(getActivity());
         List<Contact> contacts = contactLab.getContacts();
-        mAdapter = new ContactAdapter(contacts);
+        mAdapter = new ContactAdapter(getActivity(), contacts);
         mContactsRecyclerView.setAdapter(mAdapter);
     }
 
-    private class ContactHolder extends RecyclerView.ViewHolder {
-
-        private ImageView mLetterFavourite;
-        private TextView mLetter;
-        private ImageView mIcon;
-        private TextView mName;
-        private LinearLayout mItemLayout;
-
-        private ContactHolder(View itemView) {
-            super(itemView);
-            mLetterFavourite = (ImageView) itemView.findViewById(R.id.contact_item_letter_favourite);
-            mLetter = (TextView) itemView.findViewById(R.id.contact_item_letter);
-            mIcon = (ImageView) itemView.findViewById(R.id.contact_item_icon);
-            mName = (TextView) itemView.findViewById(R.id.contact_item_name);
-            mItemLayout = (LinearLayout) itemView.findViewById(R.id.contact_item);
-        }
-    }
-
-    private class ContactAdapter extends RecyclerView.Adapter<ContactHolder> {
-
-        private List<Contact> mContacts;
-
-        ContactAdapter(List<Contact> contacts) {
-            mContacts = contacts;
-        }
-
-        @Override
-        public ContactHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            LayoutInflater inflater = LayoutInflater.from(getActivity());
-            View view = inflater.inflate(R.layout.contact_item, parent, false);
-            return new ContactHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(ContactHolder holder, int position) {
-            Contact contact = mContacts.get(position);
-            Log.i("Position", Integer.toString(position));
-            if (position == 0 || mContacts.get(position).getName().charAt(0) != mContacts.get(position - 1).getName().charAt(0)) {
-                holder.mLetter.setText(Character.toString(contact.getName().charAt(0)));
-            } else if (position != mContacts.size() - 1 && mContacts.get(position).getName().charAt(0) != mContacts.get(position + 1).getName().charAt(0)) {
-                holder.mItemLayout.setBackgroundResource(R.drawable.bg);
-            } else {
-                holder.mLetter.setText("");
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    holder.mItemLayout.setBackgroundColor(getResources().getColor(R.color.colorWhite, null));
-                } else {
-                    holder.mItemLayout.setBackgroundColor(getResources().getColor(R.color.colorWhite));
-                }
-
-            }
-            holder.mIcon.setImageBitmap(contact.getIcon());
-            holder.mName.setText(contact.getName());
-        }
-
-        @Override
-        public int getItemCount() {
-            return mContacts.size();
-        }
-    }
 
     public void setContext(Context context) {
         this.context = context;

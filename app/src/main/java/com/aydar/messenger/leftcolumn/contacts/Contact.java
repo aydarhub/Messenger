@@ -1,4 +1,4 @@
-package com.aydar.messenger;
+package com.aydar.messenger.leftcolumn.contacts;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -8,12 +8,12 @@ import com.aydar.messenger.R;
 
 import java.util.UUID;
 
-class Contact {
+public class Contact {
     private UUID mId;
     private Bitmap mIcon;
     private String mName;
 
-    Contact(Context context, String name) {
+   public Contact(Context context, String name) {
         mId = UUID.randomUUID();
         mIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.contact_icon);
         mName = name;
@@ -23,7 +23,7 @@ class Contact {
         return mId;
     }
 
-    Bitmap getIcon() {
+    public Bitmap getIcon() {
         return mIcon;
     }
 

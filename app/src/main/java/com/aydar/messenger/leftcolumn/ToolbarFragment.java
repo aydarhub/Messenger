@@ -1,4 +1,4 @@
-package com.aydar.messenger;
+package com.aydar.messenger.leftcolumn;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

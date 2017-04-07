@@ -1,24 +1,26 @@
-package com.aydar.messenger;
+package com.aydar.messenger.leftcolumn.contacts;
 
 import android.content.Context;
+
+import com.aydar.messenger.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-class ContactLab {
+public class ContactLab {
     private static ContactLab sContactLab;
 
     private List<Contact> mContacts;
 
-    static ContactLab get(Context context) {
+    public static ContactLab get(Context context) {
         if (sContactLab == null) {
             sContactLab = new ContactLab(context);
         }
         return sContactLab;
     }
-    List<Contact> getContacts() {
+    public List<Contact> getContacts() {
         return mContacts;
     }
 

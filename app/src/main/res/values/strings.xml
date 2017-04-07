@@ -20,4 +20,17 @@
         <item>Ildus</item>
         <item>Ilfat</item>
     </string-array>
+
+    <string-array name="messages">
+        <item>Сообщение1</item>
+        <item>Сообщение2</item>
+        <item>Сообщение3</item>
+        <item>Сообщение4</item>
+        <item>Сообщение5</item>
+        <item>Сообщение6</item>
+        <item>Сообщение7</item>
+        <item>Сообщение8</item>
+        <item>Сообщение9</item>
+        <item>Сообщение10</item>
+    </string-array>
 </resources>
