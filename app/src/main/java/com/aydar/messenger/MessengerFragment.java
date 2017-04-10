@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -24,6 +26,7 @@ public class MessengerFragment extends AbstractTabFragment {
     private static final int LAYOUT = R.layout.fragment_messenger;
     private RecyclerView mContactsRecyclerView;
     private ContactAdapter mAdapter;
+    private Toolbar toolbar;
 
     public static MessengerFragment getInstance(Context context) {
         Bundle args = new Bundle();
@@ -41,10 +44,23 @@ public class MessengerFragment extends AbstractTabFragment {
         View view = inflater.inflate(LAYOUT, container, false);
         mContactsRecyclerView = (RecyclerView) view.findViewById(R.id.contacts_recycler_view);
         mContactsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        initToolbar(view);
 
         updateUI();
 
         return view;
+    }
+
+    private void initToolbar(View view) {
+        toolbar = (Toolbar) view.findViewById(R.id.left_toolbar);
+        toolbar.setTitle(R.string.messages);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                return false;
+            }
+        });
+        toolbar.inflateMenu(R.menu.left_menu);
     }
 
     private void updateUI() {

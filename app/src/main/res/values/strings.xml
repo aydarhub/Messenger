@@ -6,6 +6,7 @@
     <string name="tab_item_messenger">Messenger</string>
     <string name="search_title">Search</string>
     <string name="search">Search</string>
+    <string name="messages">Messages</string>
 
     <string-array name="contacts">
         <item>Abdulla</item>
@@ -33,4 +34,10 @@
         <item>Сообщение9</item>
         <item>Сообщение10</item>
     </string-array>
+    <string name="title_activity_main2">Main2Activity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
 </resources>

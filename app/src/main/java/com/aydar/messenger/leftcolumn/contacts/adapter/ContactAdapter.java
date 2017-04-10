@@ -27,7 +27,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactHolder> {
     @Override
     public ContactHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
-        View view = inflater.inflate(R.layout.contact_item, parent, false);
+        View view = inflater.inflate(R.layout.messages_contact_item, parent, false);
         return new ContactHolder(view);
     }
 
@@ -35,19 +35,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactHolder> {
     public void onBindViewHolder(ContactHolder holder, int position) {
         Contact contact = mContacts.get(position);
         Log.i("Position", Integer.toString(position));
-        if (position == 0 || mContacts.get(position).getName().charAt(0) != mContacts.get(position - 1).getName().charAt(0)) {
-            holder.setLetter(Character.toString(contact.getName().charAt(0)));
-        } else if (position != mContacts.size() - 1 && mContacts.get(position).getName().charAt(0) != mContacts.get(position + 1).getName().charAt(0)) {
-            holder.setItemUnderline();
-        } else {
-            holder.clearLetter();
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                holder.clearUnderline(mContext);
-            } else {
-                holder.clearUnderline(mContext);
-            }
 
-        }
         holder.setIcon(contact.getIcon());
         holder.setName(contact.getName());
     }

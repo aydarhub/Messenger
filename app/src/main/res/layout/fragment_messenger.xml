@@ -6,20 +6,19 @@
     android:baselineAligned="false">
 
     <LinearLayout
+        android:id="@+id/left_column"
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:paddingStart="15dp"
-        android:paddingEnd="0dp"
-        android:background="#fff">
+        android:layout_weight="1">
 
         <android.support.v7.widget.Toolbar
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/left_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark">
+            android:theme="@style/ThemeOverlay.AppCompat.Dark"
+            android:background="?attr/colorPrimary">
 
             <EditText
                 android:id="@+id/search"
@@ -30,12 +29,24 @@
 
         </android.support.v7.widget.Toolbar>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/contacts_recycler_view"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:paddingStart="15dp"
+            android:paddingEnd="0dp"
+            android:background="#fff">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/contacts_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
 
     </LinearLayout>
+
+
 
     <LinearLayout
         android:id="@+id/right_column"
@@ -44,7 +55,7 @@
         android:layout_height="match_parent"
         android:paddingStart="24dp"
         android:paddingEnd="24dp"
-        android:layout_weight="3">
+        android:layout_weight="5">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/messages_recycler_view"
