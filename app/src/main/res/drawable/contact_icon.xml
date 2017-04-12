@@ -3,7 +3,5 @@
     android:shape="oval">
     <solid
         android:color="@color/colorContactIcon"/>
-    <size
-        android:width="12dp"
-        android:height="12dp"/>
+
 </shape>

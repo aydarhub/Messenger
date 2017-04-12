@@ -5,4 +5,5 @@
     <color name="mainBackground">#f1f1f1</color>
     <color name="colorWhite">#fff</color>
     <color name="colorContactIcon">#a9a9a9</color>
+    <color name="new_messages_count_notification_background">#00ff3c</color>
 </resources>

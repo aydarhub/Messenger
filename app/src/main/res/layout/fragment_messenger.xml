@@ -3,7 +3,8 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:baselineAligned="false">
+    android:baselineAligned="false"
+    android:background="@mipmap/chat_bg">
 
     <LinearLayout
         android:id="@+id/left_column"
@@ -13,19 +14,11 @@
         android:layout_weight="1">
 
         <android.support.v7.widget.Toolbar
-            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/left_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:theme="@style/ThemeOverlay.AppCompat.Dark"
             android:background="?attr/colorPrimary">
-
-            <EditText
-                android:id="@+id/search"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:theme="@style/AppDefault"
-                android:hint="@string/search"/>
 
         </android.support.v7.widget.Toolbar>
 
@@ -46,16 +39,23 @@
 
     </LinearLayout>
 
-
-
     <LinearLayout
         android:id="@+id/right_column"
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:paddingStart="24dp"
-        android:paddingEnd="24dp"
         android:layout_weight="5">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/right_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="0dp"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark"
+            android:background="?attr/colorPrimary">
+
+        </android.support.v7.widget.Toolbar>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/messages_recycler_view"

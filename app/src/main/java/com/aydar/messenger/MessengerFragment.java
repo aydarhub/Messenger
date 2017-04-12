@@ -26,7 +26,8 @@ public class MessengerFragment extends AbstractTabFragment {
     private static final int LAYOUT = R.layout.fragment_messenger;
     private RecyclerView mContactsRecyclerView;
     private ContactAdapter mAdapter;
-    private Toolbar toolbar;
+    private Toolbar mLeftToolbar;
+    private Toolbar mRightToolbar;
 
     public static MessengerFragment getInstance(Context context) {
         Bundle args = new Bundle();
@@ -44,23 +45,36 @@ public class MessengerFragment extends AbstractTabFragment {
         View view = inflater.inflate(LAYOUT, container, false);
         mContactsRecyclerView = (RecyclerView) view.findViewById(R.id.contacts_recycler_view);
         mContactsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        initToolbar(view);
+        initLeftToolbar(view);
+        initRightToolbar(view);
 
         updateUI();
 
         return view;
     }
 
-    private void initToolbar(View view) {
-        toolbar = (Toolbar) view.findViewById(R.id.left_toolbar);
-        toolbar.setTitle(R.string.messages);
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+    private void initLeftToolbar(View view) {
+        mLeftToolbar = (Toolbar) view.findViewById(R.id.left_toolbar);
+        mLeftToolbar.setTitle(R.string.messages);
+        mLeftToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 return false;
             }
         });
-        toolbar.inflateMenu(R.menu.left_menu);
+        mLeftToolbar.inflateMenu(R.menu.left_menu);
+    }
+
+    private void initRightToolbar(View view) {
+        mRightToolbar = (Toolbar) view.findViewById(R.id.right_toolbar);
+        mRightToolbar.setTitle("Aydar");
+        mRightToolbar.setSubtitle("last seen just now");
+        mRightToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                return false;
+            }
+        });
     }
 
     private void updateUI() {
