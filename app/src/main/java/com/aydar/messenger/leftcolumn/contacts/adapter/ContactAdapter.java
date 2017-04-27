@@ -36,8 +36,8 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactHolder> {
         Contact contact = mContacts.get(position);
         Log.i("Position", Integer.toString(position));
 
-        holder.setIcon(contact.getIcon());
-        holder.setName(contact.getName());
+        holder.getIcon().setImageBitmap(contact.getIcon());
+        holder.getName().setText(contact.getName());
     }
 
     @Override

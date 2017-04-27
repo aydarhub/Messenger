@@ -27,5 +27,11 @@ class ContactHolder extends RecyclerView.ViewHolder {
         mName.setText(name);
     }
 
+    public ImageView getIcon() {
+        return mIcon;
+    }
 
+    public TextView getName() {
+        return mName;
+    }
 }

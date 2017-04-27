@@ -19,13 +19,18 @@ import android.widget.TextView;
 import com.aydar.messenger.leftcolumn.contacts.Contact;
 import com.aydar.messenger.leftcolumn.contacts.ContactLab;
 import com.aydar.messenger.leftcolumn.contacts.adapter.ContactAdapter;
+import com.aydar.messenger.rightcolumn.chat.Message;
+import com.aydar.messenger.rightcolumn.chat.MessageLab;
+import com.aydar.messenger.rightcolumn.chat.adapter.MessagesAdapter;
 
 import java.util.List;
 
 public class MessengerFragment extends AbstractTabFragment {
     private static final int LAYOUT = R.layout.fragment_messenger;
-    private RecyclerView mContactsRecyclerView;
-    private ContactAdapter mAdapter;
+    private RecyclerView mChatsRecyclerView;
+    private RecyclerView mChatRecyclerView;
+    private ContactAdapter mChatsAdapter;
+    private MessagesAdapter mChatAdapter;
     private Toolbar mLeftToolbar;
     private Toolbar mRightToolbar;
 
@@ -43,12 +48,15 @@ public class MessengerFragment extends AbstractTabFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(LAYOUT, container, false);
-        mContactsRecyclerView = (RecyclerView) view.findViewById(R.id.contacts_recycler_view);
-        mContactsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mChatsRecyclerView = (RecyclerView) view.findViewById(R.id.contacts_recycler_view);
+        mChatsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mChatRecyclerView = (RecyclerView) view.findViewById(R.id.messages_recycler_view);
+        mChatRecyclerView.setLayoutManager((new LinearLayoutManager(getActivity())));
         initLeftToolbar(view);
         initRightToolbar(view);
 
-        updateUI();
+        setChatsAdapter();
+        setChatAdapter();
 
         return view;
     }
@@ -77,11 +85,18 @@ public class MessengerFragment extends AbstractTabFragment {
         });
     }
 
-    private void updateUI() {
+    private void setChatsAdapter() {
         ContactLab contactLab = ContactLab.get(getActivity());
         List<Contact> contacts = contactLab.getContacts();
-        mAdapter = new ContactAdapter(getActivity(), contacts);
-        mContactsRecyclerView.setAdapter(mAdapter);
+        mChatsAdapter = new ContactAdapter(getActivity(), contacts);
+        mChatsRecyclerView.setAdapter(mChatsAdapter);
+    }
+
+    private void setChatAdapter() {
+        MessageLab messageLab = MessageLab.get(getActivity());
+        List<Message> messages = messageLab.getMessages();
+        mChatAdapter = new MessagesAdapter(getActivity(), messages);
+        mChatRecyclerView.setAdapter(mChatAdapter);
     }
 
 
