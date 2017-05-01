@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:id="@+id/outgoing_message"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_outgoing_message"
+        android:padding="10dp"
+        android:layout_gravity="end">
+
+        <TextView
+            android:id="@+id/outgoing_message_text"
+            android:maxWidth="250dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColorHint="#282828"
+            android:textColor="#282828"
+            android:hint="Привет, мир! "/>
+
+        <TextView
+            android:id="@+id/outgoing_message_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="12:59"
+            android:textColor="#89209b"
+            android:textColorHint="#89209b"
+            android:layout_gravity="end"/>
+    </LinearLayout>
+</LinearLayout>
