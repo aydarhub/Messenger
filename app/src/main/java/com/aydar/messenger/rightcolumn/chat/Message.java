@@ -3,15 +3,20 @@ package com.aydar.messenger.rightcolumn.chat;
 import java.util.UUID;
 
 public class Message {
+
+    public static final int CHAT_DATE = 0;
+    public static final int INCOMING_MESSAGE = 1;
+    public static final int OUTGOING_MESSAGE = 2;
+
     private UUID mId;
-    private boolean mIsIncoming;
+    private int mMessageType;
     private String mDay;
     private String mTime;
     private String mText;
 
-    public Message(boolean isIncoming, String text, String day, String time) {
+    public Message(int messageType, String text, String day, String time) {
         mId = UUID.randomUUID();
-        mIsIncoming = isIncoming;
+        mMessageType = messageType;
         mText = text;
         mDay = day;
         mTime = time;
@@ -21,8 +26,8 @@ public class Message {
         return mId;
     }
 
-    public boolean isIncoming() {
-        return mIsIncoming;
+    public int getMessageType() {
+        return mMessageType;
     }
 
     public String getText() {

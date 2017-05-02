@@ -1,7 +1,6 @@
 package com.aydar.messenger;
 
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,9 +11,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.aydar.messenger.leftcolumn.contacts.Contact;
 import com.aydar.messenger.leftcolumn.contacts.ContactLab;
@@ -23,7 +21,15 @@ import com.aydar.messenger.rightcolumn.chat.Message;
 import com.aydar.messenger.rightcolumn.chat.MessageLab;
 import com.aydar.messenger.rightcolumn.chat.adapter.MessagesAdapter;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.net.URISyntaxException;
 import java.util.List;
+
+import io.socket.client.IO;
+import io.socket.client.Socket;
+import io.socket.emitter.Emitter;
 
 public class MessengerFragment extends AbstractTabFragment {
     private static final int LAYOUT = R.layout.fragment_messenger;
@@ -34,19 +40,37 @@ public class MessengerFragment extends AbstractTabFragment {
     private Toolbar mLeftToolbar;
     private Toolbar mRightToolbar;
 
+    private EditText mMessageEditText;
+    private Button mSendMessageButton;
+
+    private Socket mSocket;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.i("Where am I?", "onCreate");
+        try {
+            mSocket = IO.socket("http://192.168.0.102:3000");
+            mSocket.connect();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public static MessengerFragment getInstance(Context context) {
         Bundle args = new Bundle();
         MessengerFragment fragment = new MessengerFragment();
         fragment.setArguments(args);
         fragment.setContext(context);
         fragment.setTitle(context.getString(R.string.tab_item_messenger));
-
         return fragment;
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Log.i("Where am I?", "onCreateView");
         View view = inflater.inflate(LAYOUT, container, false);
         mChatsRecyclerView = (RecyclerView) view.findViewById(R.id.contacts_recycler_view);
         mChatsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -57,6 +81,24 @@ public class MessengerFragment extends AbstractTabFragment {
 
         setChatsAdapter();
         setChatAdapter();
+
+        mMessageEditText = (EditText) view.findViewById(R.id.write_message_field);
+        mSendMessageButton = (Button) view.findViewById(R.id.send_message_button);
+
+        mSendMessageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendMessage(mMessageEditText.getText().toString());
+                JSONObject obj = new JSONObject();
+                try {
+                    obj.put("nickname", "Android");
+                    obj.put("message", mMessageEditText.getText().toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                mSocket.emit("message", obj);
+            }
+        });
 
         return view;
     }
@@ -95,13 +137,32 @@ public class MessengerFragment extends AbstractTabFragment {
     private void setChatAdapter() {
         MessageLab messageLab = MessageLab.get(getActivity());
         List<Message> messages = messageLab.getMessages();
-        mChatAdapter = new MessagesAdapter(getActivity(), messages);
-        mChatRecyclerView.setAdapter(mChatAdapter);
+        if (mChatRecyclerView.getAdapter() == null) {
+            mChatAdapter = new MessagesAdapter(getActivity(), messages);
+            mChatRecyclerView.setAdapter(mChatAdapter);
+        } else {
+            ((MessagesAdapter) mChatRecyclerView.getAdapter()).updateChat(messages);
+        }
+        mChatRecyclerView.scrollToPosition(mChatRecyclerView.getAdapter().getItemCount() - 1);
+    }
+
+    private void sendMessage(String messageText) {
+        Message message = new Message(Message.OUTGOING_MESSAGE, messageText, "1 мая, 2017", "22:48");
+        MessageLab.get(getActivity()).addMessage(message);
+
+        setChatAdapter();
     }
 
 
     public void setContext(Context context) {
         this.context = context;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.i("Where am I?", "onDestroy");
+        mSocket.disconnect();
     }
 
 }
