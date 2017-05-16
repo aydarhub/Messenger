@@ -1,6 +1,7 @@
 package com.aydar.messenger;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -20,19 +20,16 @@ import com.aydar.messenger.leftcolumn.contacts.adapter.ContactAdapter;
 import com.aydar.messenger.rightcolumn.chat.Message;
 import com.aydar.messenger.rightcolumn.chat.MessageLab;
 import com.aydar.messenger.rightcolumn.chat.adapter.MessagesAdapter;
+import com.neovisionaries.ws.client.WebSocket;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.URISyntaxException;
 import java.util.List;
-
-import io.socket.client.IO;
-import io.socket.client.Socket;
-import io.socket.emitter.Emitter;
 
 public class MessengerFragment extends AbstractTabFragment {
     private static final int LAYOUT = R.layout.fragment_messenger;
+    private static final String TAG = "Where am I?";
     private RecyclerView mChatsRecyclerView;
     private RecyclerView mChatRecyclerView;
     private ContactAdapter mChatsAdapter;
@@ -43,19 +40,16 @@ public class MessengerFragment extends AbstractTabFragment {
     private EditText mMessageEditText;
     private Button mSendMessageButton;
 
-    private Socket mSocket;
+    private WebSocket mWebSocket;
+
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.i("Where am I?", "onCreate");
-        try {
-            mSocket = IO.socket("http://192.168.0.102:3000");
-            mSocket.connect();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-
+        Log.i(TAG, "onCreate");
+        ConnectTask task = new ConnectTask();
+        task.execute();
     }
 
     public static MessengerFragment getInstance(Context context) {
@@ -71,7 +65,14 @@ public class MessengerFragment extends AbstractTabFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.i("Where am I?", "onCreateView");
-        View view = inflater.inflate(LAYOUT, container, false);
+
+        return inflater.inflate(LAYOUT, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Log.i("Where am I?", "onViewCreated");
         mChatsRecyclerView = (RecyclerView) view.findViewById(R.id.contacts_recycler_view);
         mChatsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mChatRecyclerView = (RecyclerView) view.findViewById(R.id.messages_recycler_view);
@@ -85,33 +86,24 @@ public class MessengerFragment extends AbstractTabFragment {
         mMessageEditText = (EditText) view.findViewById(R.id.write_message_field);
         mSendMessageButton = (Button) view.findViewById(R.id.send_message_button);
 
-        mSendMessageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendMessage(mMessageEditText.getText().toString());
-                JSONObject obj = new JSONObject();
-                try {
-                    obj.put("nickname", "Android");
-                    obj.put("message", mMessageEditText.getText().toString());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                mSocket.emit("message", obj);
+        mSendMessageButton.setOnClickListener(v -> {
+            sendMessage(mMessageEditText.getText().toString());
+            JSONObject obj = new JSONObject();
+            try {
+                obj.put("nickname", "Android");
+                obj.put("message_text", mMessageEditText.getText().toString());
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        });
+            mWebSocket.sendText("Android: " + mMessageEditText.getText().toString());
 
-        return view;
+        });
     }
 
     private void initLeftToolbar(View view) {
         mLeftToolbar = (Toolbar) view.findViewById(R.id.left_toolbar);
         mLeftToolbar.setTitle(R.string.messages);
-        mLeftToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                return false;
-            }
-        });
+        mLeftToolbar.setOnMenuItemClickListener(item -> false);
         mLeftToolbar.inflateMenu(R.menu.left_menu);
     }
 
@@ -119,12 +111,7 @@ public class MessengerFragment extends AbstractTabFragment {
         mRightToolbar = (Toolbar) view.findViewById(R.id.right_toolbar);
         mRightToolbar.setTitle("Aydar");
         mRightToolbar.setSubtitle("last seen just now");
-        mRightToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                return false;
-            }
-        });
+        mRightToolbar.setOnMenuItemClickListener(item -> false);
     }
 
     private void setChatsAdapter() {
@@ -162,7 +149,27 @@ public class MessengerFragment extends AbstractTabFragment {
     public void onDestroy() {
         super.onDestroy();
         Log.i("Where am I?", "onDestroy");
-        mSocket.disconnect();
+        mWebSocket.disconnect();
+    }
+
+    class ConnectTask extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected void onPreExecute() {
+            Log.i(TAG, "onPreExecute");
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            Log.i(TAG, "doInBackground");
+            ChatApplication app = (ChatApplication) getActivity().getApplication();
+            mWebSocket = app.getWebSocketConnection();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            Log.i(TAG, "onPostExecute");
+        }
     }
 
 }
